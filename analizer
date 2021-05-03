@@ -1,4 +1,5 @@
 #!/bin/bash
+
 menu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
         cat <<EOF
@@ -20,51 +21,38 @@ EOF
 }
 
 which-ip() { #wip
-
         awk '{print " - " $1}' $2 | sort | uniq -c | sort -rh | head -1
-
 }
 
 most-requested-page() { #mrp
-
         awk '{print " - " $7 }' $2 | sort | uniq -dc | sort -rh
-
-
 }
 
 requests-from-ip() { #rfip
-
         awk '{print " - " $1}' $2 | sort | uniq -c | sort -h
-
 }
 
-
-acces-to-non-existed-page() { #atnep
-
+access-to-non-existed-page() { #atnep
         echo "hello"
-
 }
 
-: '
 time-with-most-request() { #twmr
-
+        echo "hello"
 }
 
 bot-access() { #ba
-
-
-
+        grep -Hir $2 | awk '{print }' | sort | uniq -c | sort -h
 }
-'
+
 if [ -n "$1" ]
 then
 case "$1" in
 --wip | -w) which-ip $* ;;
 --mrp | -m) most-requested-page $* ;;
 --rfip | -r ) requests-from-ip $* ;;
---atnep | -a) acces-to-non-existed-page $*;;
---twmr | -t) time-with-most-request ;;
---ba | -b) bot-acces ;;
+--atnep | -a) access-to-non-existed-page $*;;
+--twmr | -t) time-with-most-request $* ;;
+--ba | -b) bot-access $* ;;
 *) menu ;;
 esac
 shift
