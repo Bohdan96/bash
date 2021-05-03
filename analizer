@@ -1,0 +1,20 @@
+#!/bin/bash
+
+menu() {
+        echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
+        echo "Usage: analizer [OPTIONS]"
+        echo "OPTIONS:"
+        echo "--wip" #which-ip
+        echo "  Display from which ip were the most requests"
+        echo "--mrp" #most-requested-page
+        echo "  Display what is the most requested page"
+        echo "--rfip" #requests-from-ip
+        echo "  Display how many requests were there from each ip"
+        echo "--atnep" #acces-to-non-existed-page
+        echo "  Display what non-existent pages were clients referred to"
+        echo "--twmr" #time-with-most-request
+        echo "  Display what time did site get the most requests"
+        echo "--ba" #bot-acces
+        echo "  Display what search bots have accessed the site? (UA + IP)}"
+}
+menu
