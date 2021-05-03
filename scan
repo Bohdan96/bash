@@ -30,10 +30,8 @@ show_ip() {
 if [ -n "$1" ]
 then
 case "$1" in
--a) show_ip $* ;;
---all) show_ip $* ;;
--t) scan_port $* ;;
---target) scan_port $* ;;
+-a | --all) show_ip $* ;;
+-t | --target) scan_port $* ;;
 *) menu ;;
 esac
 shift
