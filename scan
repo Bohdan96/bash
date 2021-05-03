@@ -1,4 +1,3 @@
-
 #!/bin/bash
 menu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-scan by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
@@ -35,5 +34,4 @@ case "$1" in
 *) menu ;;
 esac
 shift
-else menu
 fi
