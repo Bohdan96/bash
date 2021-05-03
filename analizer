@@ -1,20 +1,69 @@
 #!/bin/bash
-
 menu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
-        echo "Usage: analizer [OPTIONS]"
-        echo "OPTIONS:"
-        echo "--wip" #which-ip
-        echo "  Display from which ip were the most requests"
-        echo "--mrp" #most-requested-page
-        echo "  Display what is the most requested page"
-        echo "--rfip" #requests-from-ip
-        echo "  Display how many requests were there from each ip"
-        echo "--atnep" #acces-to-non-existed-page
-        echo "  Display what non-existent pages were clients referred to"
-        echo "--twmr" #time-with-most-request
-        echo "  Display what time did site get the most requests"
-        echo "--ba" #bot-acces
-        echo "  Display what search bots have accessed the site? (UA + IP)}"
+        cat <<EOF
+        Usage: analizer [OPTIONS] [LOG FILE]
+        OPTIONS:
+        --wip, -w:
+                Display from which ip were the most requests
+        --mrp, -m:
+                Display what is the most requested page
+        --rfip, -r:
+                Display how many requests were there from each ip
+        --atnep, -a:
+                Display what non-existent pages were clients referred to
+        --twmr, -t:
+                Display what time did sit get the most requests
+        --ba, -b:
+                Display what search bots have accessed the site? (UA + IP)
+EOF
 }
-menu
+
+which-ip() { #wip
+
+        awk '{print " - " $1}' $2 | sort | uniq -c | sort -rh | head -1
+
+}
+
+most-requested-page() { #mrp
+
+        awk '{print " - " $7 }' $2 | sort | uniq -dc | sort -rh
+
+
+}
+
+requests-from-ip() { #rfip
+
+        awk '{print " - " $1}' $2 | sort | uniq -c | sort -h
+
+}
+
+
+acces-to-non-existed-page() { #atnep
+
+        echo "hello"
+
+}
+
+: '
+time-with-most-request() { #twmr
+
+}
+
+bot-access() { #ba
+
+
+
+}
+'
+if [ -n "$1" ]
+then
+case "$1" in
+--wip | -w) which-ip $* ;;
+--mrp | -m) most-requested-page $* ;;
+--rfip | -r ) requests-from-ip $* ;;
+--atnep | -a) acces-to-non-existed-page $*;;
+--twmr | -t) time-with-most-request ;;
+--ba | -b) bot-acces ;;
+*) menu ;;
+esac
