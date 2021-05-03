@@ -67,3 +67,6 @@ case "$1" in
 --ba | -b) bot-acces ;;
 *) menu ;;
 esac
+shift
+else menu
+fi
