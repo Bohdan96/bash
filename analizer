@@ -56,6 +56,5 @@ case "$1" in
 *) menu ;;
 esac
 shift
-else menu
 fi
 
