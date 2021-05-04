@@ -1,12 +1,14 @@
 #!/bin/bash
 menu() {
-        echo "-=-=-=-=-=-=-=-=-=-=-=-scan by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
-        echo "Usage: scan [OPTIONS]"
-        echo "OPTIONS:"
-        echo "   --all, -a:"
-        echo "         Displays the IP addresses of all hosts in the current subnet"
-        echo "   --target, -t [IP] [PORT]:"
-        echo "         Displays a list of open system TCP ports"
+        echo "-=-=-=-=-=-=-=-=-=-=-=-TCP/IP scan by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
+        cat <<EOF
+Usage: scan [OPTIONS]
+OPTIONS:
+  --all, -a:
+        Displays the IP addresses of all hosts in the current subnet
+  --target, -t [IP] [PORT]:
+        Displays a list of open system TCP ports
+EOF
 }
 
 scan_port() {
@@ -34,4 +36,5 @@ case "$1" in
 *) menu ;;
 esac
 shift
+else menu
 fi
