@@ -2,7 +2,7 @@
 menu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-TCP/IP scan by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
         cat <<EOF
-Usage: scan [OPTIONS]
+Usage: ./scan [OPTIONS]
 OPTIONS:
   --all, -a:
         Displays the IP addresses of all hosts in the current subnet
