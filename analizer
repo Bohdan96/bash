@@ -1,0 +1,60 @@
+#!/bin/bash
+
+menu() {
+        echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
+        cat <<EOF
+        Usage: analizer [OPTIONS] [LOG FILE]
+        OPTIONS:
+        --wip, -w:
+                Display from which ip were the most requests
+        --mrp, -m:
+                Display what is the most requested page
+        --rfip, -r:
+                Display how many requests were there from each ip
+        --atnep, -a:
+                Display what non-existent pages were clients referred to
+        --twmr, -t:
+                Display what time did sit get the most requests
+        --ba, -b:
+                Display what search bots have accessed to the site
+EOF
+}
+
+which-ip() { #wip
+        awk '{print " - " $1}' $2 | sort | uniq -c | sort -rh | head -1
+}
+
+most-requested-page() { #mrp
+        awk '{print " - " $7 }' $2 | sort | uniq -dc | sort -rh
+}
+
+requests-from-ip() { #rfip
+        awk '{print " - " $1}' $2 | sort | uniq -c | sort -h
+}
+
+access-to-non-existed-page() { #atnep
+        awk '{print $1 "\t" "(" $14 ")" " -- " $7 " - " $9}' $2 | sort -h | grep -i 404
+}
+
+time-with-most-request() { #twmr
+        awk '{print "request was at" " - " $4}' $2 | tr -d "[" | sort -h | uniq -c | sort -r
+}
+
+bot-access() { #ba
+        awk '{print "(" $1  ")"  " -- "$14}' $2 | sort | uniq -c | sort -h | grep -i bot
+}
+
+if [ -n "$1" ]
+then
+case "$1" in
+--wip | -w) which-ip $* ;;
+--mrp | -m) most-requested-page $* ;;
+--rfip | -r ) requests-from-ip $* ;;
+--atnep | -a) access-to-non-existed-page $*;;
+--twmr | -t) time-with-most-request $* ;;
+--ba | -b) bot-access $* ;;
+*) menu ;;
+esac
+shift
+else menu
+fi
