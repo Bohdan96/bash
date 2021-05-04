@@ -3,7 +3,7 @@
 menu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
         cat <<EOF
-        Usage: analizer [OPTIONS] [LOG FILE]
+        Usage: ./analizer [OPTIONS] [LOG FILE]
         OPTIONS:
         --wip, -w:
                 Display from which ip were the most requests
@@ -12,9 +12,9 @@ menu() {
         --rfip, -r:
                 Display how many requests were there from each ip
         --atnep, -a:
-                Display what non-existent pages were clients referred to
+                Display what non-existent pages were referred to
         --twmr, -t:
-                Display what time did sit get the most requests
+                Display at what time there were the most requests
         --ba, -b:
                 Display what search bots have accessed to the site
 EOF
@@ -33,7 +33,7 @@ requests-from-ip() { #rfip
 }
 
 access-to-non-existed-page() { #atnep
-        awk '{print $1 "\t" "(" $14 ")" " -- " $7 " - " $9}' $2 | sort -h | grep -i 404
+        awk '{print $1 " - "  "(" $14 ")" " -- " $7}' $2 | sort -h | grep -i 404
 }
 
 time-with-most-request() { #twmr
