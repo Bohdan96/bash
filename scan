@@ -1,60 +1,37 @@
 #!/bin/bash
-
 menu() {
-        echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
-        cat <<EOF
-        Usage: ./analizer [OPTIONS] [LOG FILE]
-        OPTIONS:
-        --wip, -w:
-                Display from which ip were the most requests
-        --mrp, -m:
-                Display what is the most requested page
-        --rfip, -r:
-                Display how many requests were there from each ip
-        --atnep, -a:
-                Display what non-existent pages were referred to
-        --twmr, -t:
-                Display at what time there were the most requests
-        --ba, -b:
-                Display what search bots have accessed to the site
-EOF
+        echo "-=-=-=-=-=-=-=-=-=-=-=-scan by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
+        echo "Usage: scan [OPTIONS]"
+        echo "OPTIONS:"
+        echo "   --all, -a:"
+        echo "         Displays the IP addresses of all hosts in the current subnet"
+        echo "   --target, -t [IP] [PORT]:"
+        echo "         Displays a list of open system TCP ports"
 }
 
-which-ip() { #wip
-        awk '{print " - " $1}' $2 | sort | uniq -c | sort -rh | head -1
+scan_port() {
+        echo "-------------------Scanning port---------------------"
+        echo
+        ip=$2
+        port=$3
+        nc -nvz $ip $port
+        echo
+        echo "-----------------------DONE--------------------------"
 }
 
-most-requested-page() { #mrp
-        awk '{print " - " $7 }' $2 | sort | uniq -dc | sort -rh
-}
-
-requests-from-ip() { #rfip
-        awk '{print " - " $1}' $2 | sort | uniq -c | sort -h
-}
-
-access-to-non-existed-page() { #atnep
-        awk '{print $1 " - "  "(" $14 ")" " -- " $7}' $2 | sort -h | grep -i 404
-}
-
-time-with-most-request() { #twmr
-        awk '{print "request was at" " - " $4}' $2 | tr -d "[" | sort -h | uniq -c | sort -r
-}
-
-bot-access() { #ba
-        awk '{print "(" $1  ")"  " -- "$14}' $2 | sort | uniq -c | sort -h | grep -i bot
+show_ip() {
+        echo "-----------------------------------------------------"
+        echo "             This server has next ip:          "
+        ip -4 a | grep inet | cut -f1 | awk '{print $2}' | cut -f1,2,3
+        echo "-----------------------------------------------------"
 }
 
 if [ -n "$1" ]
 then
 case "$1" in
---wip | -w) which-ip $* ;;
---mrp | -m) most-requested-page $* ;;
---rfip | -r ) requests-from-ip $* ;;
---atnep | -a) access-to-non-existed-page $*;;
---twmr | -t) time-with-most-request $* ;;
---ba | -b) bot-access $* ;;
+-a | --all) show_ip $* ;;
+-t | --target) scan_port $* ;;
 *) menu ;;
 esac
 shift
-else menu
 fi
