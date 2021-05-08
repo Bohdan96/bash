@@ -1,13 +1,20 @@
-#!/bin/bash
-menu() {
+enu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-backup by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
         cat <<EOF
 Usage: ./backup [SOURCE] [DESTINATION]
-SOURCE:
-   for example:
-DESTINATION:
-   for example:
+SOURCE: path to the directory for which a backup will be created
+   for example: /root/
+DESTINATION: path to the directory where backup will be saved
+   for example: /backup/
 EOF
+}
+
+checking_existing_of_files() {
+
+}
+
+creating_backup() {
+
 }
 
 if [ -n "$1" ]
