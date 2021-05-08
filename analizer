@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#Log analizer 
 menu() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
         cat <<EOF
