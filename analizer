@@ -37,7 +37,7 @@ access-to-non-existed-page() { #atnep
 }
 
 time-with-most-request() { #twmr
-        awk '{print "request was at" " - " $4}' $2 | tr -d "[" | sort -h | uniq -c | sort -r
+        awk '{print "request was at" " - " $4}' $2 | tr -d "[" | sort -h | uniq -dc | sort -r
 }
 
 bot-access() { #ba
