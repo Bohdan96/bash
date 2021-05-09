@@ -1,47 +1,71 @@
 #!/bin/bash
-#Log analizer 
-menu() {
+
+man() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-analizer by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
-        cat <<EOF
-        Usage: ./analizer [OPTIONS] [LOG FILE]
-        OPTIONS:
-        --wip, -w:
-                Display from which ip were the most requests
-        --mrp, -m:
-                Display what is the most requested page
-        --rfip, -r:
-                Display how many requests were there from each ip
-        --atnep, -a:
-                Display what non-existent pages were referred to
-        --twmr, -t:
-                Display at what time there were the most requests
-        --ba, -b:
-                Display what search bots have accessed to the site
+cat <<EOF
+Usage: ./analizer [OPTIONS] [LOG FILE]
+OPTIONS:
+   --wip, -w:
+         Display from which ip were the most requests
+   --mrp, -m:
+         Display what is the most requested page
+   --rfip, -r:
+         Display how many requests were there from each ip
+   --atnep, -a:
+         Display what non-existent pages were referred
+   --twmr, -t:
+         Display at what time there were the most requests
+   --ba, -b:
+         Display what search bots have accessed to the site
 EOF
 }
 
 which-ip() { #wip
+        if [ -n "$2" ]
+        then
         awk '{print " - " $1}' $2 | sort | uniq -c | sort -rh | head -1
+        else echo "Error: The log file not found. Please, specify the log file!"
+        fi
 }
 
 most-requested-page() { #mrp
+        if [ -n "$2" ]
+        then
         awk '{print " - " $7 }' $2 | sort | uniq -dc | sort -rh
+        else echo "Error: The log file not found. Please, specify the log file!"
+        fi
 }
 
 requests-from-ip() { #rfip
+        if [ -n "$2" ]
+        then
         awk '{print " - " $1}' $2 | sort | uniq -c | sort -h
+        else echo "Error: The log file not found. Please, specify the log file!"
+        fi
 }
 
 access-to-non-existed-page() { #atnep
+        if [ -n "$2" ]
+        then
         awk '{print $1 " - "  "(" $14 ")" " -- " $7}' $2 | sort -h | grep -i 404
+        else echo "Error: The log file not found. Please, specify the log file!"
+        fi
 }
 
 time-with-most-request() { #twmr
+        if [ -n "$2" ]
+        then
         awk '{print "request was at" " - " $4}' $2 | tr -d "[" | sort -h | uniq -dc | sort -r
+        else echo "Error: The log file not found. Please, specify the log file!"
+        fi
 }
 
 bot-access() { #ba
+        if [ -n "$2" ]
+        then
         awk '{print "(" $1  ")"  " -- "$14}' $2 | sort | uniq -c | sort -h | grep -i bot
+        else echo "Error: The log file not found. Please, specify the log file!"
+        fi
 }
 
 if [ -n "$1" ]
@@ -53,8 +77,9 @@ case "$1" in
 --atnep | -a) access-to-non-existed-page $*;;
 --twmr | -t) time-with-most-request $* ;;
 --ba | -b) bot-access $* ;;
-*) menu ;;
+--help | -h) man ;;
+*) man ;;
 esac
 shift
-else menu
+else man
 fi
