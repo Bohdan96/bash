@@ -1,5 +1,6 @@
 #!/bin/bash
-menu() {
+
+man() {
         echo "-=-=-=-=-=-=-=-=-=-=-=-TCP/IP scan by Kanarskyi Bohdan-=-=-=-=-=-=-=-=-=-=-=-"
         cat <<EOF
 Usage: ./scan [OPTIONS]
@@ -25,8 +26,12 @@ scan_port() {
 
 show_ip() {
         echo "-----------------------------------------------------"
-        echo "             This server has next ip:          "
-        ip -4 a | grep inet | cut -f1 | awk '{print $2}' | cut -f1,2,3
+        for ip in `arp -a | awk '{print $2}' | tr -d "(*)" && ip -4 a | grep inet | cut -f1 | awk '{print $2}' | cut -f1,2,3`
+        do
+        echo "---> IP address: $ip"
+        host_name=`host $ip`
+        echo "---> Host name: $host_name"
+        done
         echo "-----------------------------------------------------"
 }
 
@@ -35,8 +40,9 @@ then
 case "$1" in
 -a | --all) show_ip $* ;;
 -t | --target) scan_port $* ;;
-*) menu ;;
+--help) man;;
+*) man ;;
 esac
 shift
-else menu
+else man
 fi
