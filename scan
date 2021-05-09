@@ -13,11 +13,13 @@ EOF
 
 scan_port() {
         echo "-------------------Scanning port---------------------"
-        echo
-        ip=$2
-        port=$3
-        nc -nvz $ip $port
-        echo
+        if [ -n "$2" ] && [ -n "$3" ]
+        then
+        nc -nvz $2 $3
+        elif [ -z "$3" ]
+        then
+        nc -nvz $2 1-65535 2>&1 | grep succeeded
+        fi
         echo "-----------------------DONE--------------------------"
 }
 
