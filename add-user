@@ -1,0 +1,34 @@
+#!/bin/bash
+useradd -d /home/dima -m -s/bin/bash \
+-c FullName,Phone,OtherInfo dima && echo dima:your-pass | chpasswd
+usermod -aG sudo dima
+su - dima -c "mkdir -p /home/dima/.ssh && cd .ssh && ssh-keygen -f dima -P nftnY3qpES"
+su - dima -c "cd /home/dima/.ssh && cat dima.pub >> /home/dima/.ssh/authorized_keys"
+echo "User dima and ssh-key was added"
+
+useradd -d /home/oleg -m -s/bin/bash \
+-c FullName,Phone,OtherInfo oleg && echo oleg:your-pass | chpasswd
+usermod -aG sudo oleg
+su - oleg -c "mkdir -p /home/oleg/.ssh && cd .ssh && ssh-keygen -f oleg -P cq6fjU795p"
+su - oleg -c "cd /home/olge/.ssh && cat oleg.pub >> /home/oleg/.ssh/authorized_keys"
+echo "User oleg ans ssh-key was added"
+
+useradd -d /home/bohdan -m -s/bin/bash \
+-c FullName,Phone,OtherInfo bohdan && echo bohdan:your-pass | chpasswd
+usermod -aG sudo bohdan
+su - bohdan -c "mkdir -p /home/bohdan/.ssh && cd .ssh && ssh-keygen -f bohdan -P 6BWALz7TbU"
+su - bohdan -c "cd /home/bohdan/.ssh && cat bohdan.pub >> /home/bohdan/.ssh/authorized_keys"
+echo "User bohdan and ssh-key was added"
+
+useradd -d /home/rostislav -m -s/bin/bash \
+-c FullName,Phone,OtherInfo rostislav && echo rostislav:your-pass | chpasswd
+usermod -aG sudo rostislav
+su - rostislav -c "mkdir -p /home/rostislav/.ssh && cd .ssh && ssh-keygen -f rostislav -P 9T7SZfuGw9"
+su - rostislav -c "cd /home/rostislav/.ssh && cat rostislav.pub >> /home/rostislav/.ssh/authorized_keys"
+echo "User rostislav and ssh-key was added"
+
+sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+sed -i '1d' /etc/passwd && echo 'root:x:0:0:root:/root:/sbin/nologin' >> /etc/passwd
+systemctl restart sshd
+echo "Root login deactivated"
